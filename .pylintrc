@@ -1,0 +1,4 @@
+[MESSAGES CONTROL]
+disable=E0401
+disable=F401
+disable=global-variable-undefined
