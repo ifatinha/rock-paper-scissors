@@ -16,6 +16,9 @@ Classes:
 
 
 from enums.game_move import GameMove
+from util.menu import menu
+from util.prompt import get_user_input
+from util.clear import clear_terminal
 import random
 
 
@@ -162,3 +165,36 @@ class Game():
         print("="*40)
         print(f"MAQUINA: {machine_score:<10} | VOCÊ: {player_score:<10}")
         print("="*40)
+
+    def play_round():
+        """
+        Executa uma rodada do jogo de Pedra, Papel e Tesoura.
+
+        Este método inicia uma rodada onde o jogador pode escolher entre Pedra (1),
+        Papel (2) e Tesoura (3), ou encerrar a rodada (0). Para cada jogada, o placar
+        do jogador e da máquina é atualizado com base na escolha feita. O jogo continua
+        até que o jogador decida encerrar a rodada. Ao final, o placar da rodada é
+        exibido.
+
+        Retorno:
+            Nenhum.
+        """
+
+        player_score = 0
+        machine_score = 0
+
+        while True:
+            option = get_user_input(menu())
+
+            if option in [1, 2, 3]:
+                player_score, machine_score = Game.check_move(option, player_score, machine_score)
+                Game.display_score(player_score=player_score, machine_score=machine_score)
+            elif option == 0:
+                print("@@@ Encerrando jogo!!! @@@")
+                break
+            else:
+                print("@@@ Opção inválida. Tente novamente! @@@")
+
+        clear_terminal()
+        print("RESULTADO")
+        Game.display_score(player_score=player_score, machine_score=machine_score)

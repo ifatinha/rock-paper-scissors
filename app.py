@@ -17,9 +17,8 @@ Classes e funções principais:
 """
 
 
-from util.menu import menu
+from util.menu import keep_playing
 from util.prompt import get_user_input
-from util.clear import clear_terminal
 from functions.game import Game
 
 
@@ -28,29 +27,22 @@ def initialize():
     Inicializa o jogo de Pedra, Papel e Tesoura.
 
     Este método inicia o loop principal do jogo, onde o jogador pode escolher
-    entre as opções de jogadas ou encerrar o jogo. O jogo continua até que o
-    jogador escolha a opção de encerrar. O placar do jogador e da máquina é
-    atualizado e exibido a cada jogada.
+    entre iniciar uma nova rodada ou encerrar o jogo. Caso o jogador opte por
+    jogar, o método `Game.play_round()` é chamado para executar a rodada. O jogo
+    continua até que o jogador escolha a opção de encerrar. Mensagens de encerramento
+    e de opções inválidas são exibidas conforme necessário.
     """
 
-    player_score = 0
-    machine_score = 0
-
     while True:
-        option = get_user_input(menu())
+        new_game = get_user_input(keep_playing())
 
-        if option in [1, 2, 3]:
-            player_score, machine_score = Game.check_move(option, player_score, machine_score)
-            Game.display_score(player_score=player_score, machine_score=machine_score)
-        elif option == 0:
-            print("@@@ Encerrando jogo!!! @@@")
+        if new_game == 1:
+            Game.play_round()
+        elif new_game == 0:
+            print("@@@ Encerrando jogo! @@@")
             break
         else:
             print("@@@ Opção inválida. Tente novamente! @@@")
-
-    clear_terminal()
-    print("RESULTADO")
-    Game.display_score(player_score=player_score, machine_score=machine_score)
 
 
 if __name__ == "__main__":

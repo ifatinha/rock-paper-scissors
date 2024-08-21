@@ -27,3 +27,21 @@ def menu():
     [3] Tesoura
     [0] Sair
     => """
+
+
+def keep_playing():
+    """
+    Exibe um menu interativo para o jogador escolher se ainda quer continuar jogando.
+
+    O menu apresenta as seguintes opções:
+    - [1] Sim
+    - [0] Não
+
+    Retorna:
+        str: A entrada do jogador, representando a escolha da jogada ou a opção de sair.
+    """
+
+    return """### Vamos brincar de Pedra, Papel, Tesoura?
+    [1] Novo Jogo
+    [0] Sair
+    => """
