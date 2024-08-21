@@ -112,7 +112,7 @@ class Game():
         }
 
     @staticmethod
-    def check_move(player_option, player_score, machine_score):
+    def check_move(player_option, player_score, machine_score, draw):
         """
         Verifica o resultado de uma jogada no jogo Pedra, Papel e Tesoura.
 
@@ -130,6 +130,7 @@ class Game():
 
         if player_move == machine_move:
             result = f"Empate! {player_move} empata com {machine_move}"
+            draw = Game.update_score(draw)
         else:
             result, player_won = Game.rules().get((player_move, machine_move),  (None, None))
             if player_won is True:
@@ -138,7 +139,7 @@ class Game():
                 machine_score = Game.update_score(machine_score)
 
         print(result)
-        return player_score, machine_score
+        return player_score, machine_score, draw
 
     @staticmethod
     def update_score(score):
@@ -159,7 +160,7 @@ class Game():
         return score + 1
 
     @staticmethod
-    def display_score(player_score, machine_score):
+    def display_score(player_score, machine_score, draw):
         """
         Exibe o placar atual do jogo.
 
@@ -169,16 +170,17 @@ class Game():
         Parâmetros:
         - player_score (int): A pontuação atual do jogador.
         - machine_score (int): A pontuação atual da máquina.
+        - draw (int): O número de empates.
 
         Exemplo:
-            mostra_placar(3, 2) imprime:
+            mostra_placar(3, 2, 3) imprime:
             ========================================
-            MAQUINA: 2 | VOCÊ: 3
+            | MAQUINA: 2 | VOCÊ: 3 | EMPATES: 3
         """
 
-        print("="*40)
-        print(f"MAQUINA: {machine_score:<10} | VOCÊ: {player_score:<10}")
-        print("="*40)
+        print("="*55)
+        print(f"| MAQUINA: {machine_score:<10} | VOCÊ: {player_score:<10} | EMPATES: {draw:<10}")
+        print("="*55)
 
     def play_round():
         """
@@ -196,13 +198,14 @@ class Game():
 
         player_score = 0
         machine_score = 0
+        draw = 0
 
         while True:
             option = get_user_input(menu())
 
             if option in [1, 2, 3]:
-                player_score, machine_score = Game.check_move(option, player_score, machine_score)
-                Game.display_score(player_score=player_score, machine_score=machine_score)
+                player_score, machine_score, draw = Game.check_move(option, player_score, machine_score, draw)
+                Game.display_score(player_score=player_score, machine_score=machine_score, draw=draw)
             elif option == 0:
                 print("@@@ Encerrando jogo!!! @@@")
                 break
@@ -211,4 +214,5 @@ class Game():
 
         clear_terminal()
         print("RESULTADO")
-        Game.display_score(player_score=player_score, machine_score=machine_score)
+        Game.display_score(player_score=player_score, machine_score=machine_score, draw=draw)
+        print(f"PARTIDAS JOGADAS: {player_score+machine_score+draw}\n")

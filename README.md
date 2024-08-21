@@ -52,9 +52,9 @@ Escolha sua jogada:
 
     ```
     ========================================
-    MÁQUINA: 2          | VOCÊ: 3         
+    | MAQUINA: 2 | VOCÊ: 3 | EMPATES: 3
     ========================================
-
+    
     ```
 
 ## Documentação do Código
