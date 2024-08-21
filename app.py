@@ -17,8 +17,6 @@ Classes e funções principais:
 """
 
 
-from util.menu import keep_playing
-from util.prompt import get_user_input
 from functions.game import Game
 
 
@@ -33,16 +31,7 @@ def initialize():
     e de opções inválidas são exibidas conforme necessário.
     """
 
-    while True:
-        new_game = get_user_input(keep_playing())
-
-        if new_game == 1:
-            Game.play_round()
-        elif new_game == 0:
-            print("@@@ Encerrando jogo! @@@")
-            break
-        else:
-            print("@@@ Opção inválida. Tente novamente! @@@")
+    Game.play_round()
 
 
 if __name__ == "__main__":
