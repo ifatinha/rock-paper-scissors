@@ -215,4 +215,4 @@ class Game():
         clear_terminal()
         print("RESULTADO")
         Game.display_score(player_score=player_score, machine_score=machine_score, draw=draw)
-        print(f"PARTIDAS JOGADAS: {player_score+machine_score+draw}\n")
+        print(f"RODADAS JOGADAS: {player_score+machine_score+draw}\n")
