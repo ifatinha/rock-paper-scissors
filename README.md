@@ -36,15 +36,15 @@ Para executar este projeto, certifique-se de ter o Python instalado. Não são n
 
 ## Uso
 
-    Após iniciar o jogo, siga o menu exibido para escolher sua jogada. A máquina fará uma jogada automaticamente, e o resultado será exibido junto com a pontuação atualizada.
+Após iniciar o jogo, siga o menu exibido para escolher sua jogada. A máquina fará uma jogada automaticamente, e o resultado será exibido junto com a pontuação atualizada.
 
-    ## Exemplo de Menu
+### Exemplo de Menu
 
-    Escolha sua jogada:
-    - Papel
-    - Pedra
-    - Tesoura
-    - Sair
+Escolha sua jogada:
+1. Papel
+2. Pedra
+3. Tesoura
+4. Sair
 
     ```
     ========================================
