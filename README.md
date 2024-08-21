@@ -28,11 +28,15 @@ Para executar este projeto, certifique-se de ter o Python instalado. Não são n
 
 2. Navegue até o diretório do projeto:
     
-    ``` cd rock-paper-scissors
+    ``` 
+    cd rock-paper-scissors
+	```
 
 3. Execute o script do jogo:
     
-    ``` python game.py
+    ``` 
+    python game.py
+    ```
 
 ## Uso
 
