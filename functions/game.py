@@ -88,6 +88,30 @@ class Game():
         return Game.get_move(numero)
 
     @staticmethod
+    def rules():
+        """
+        Retorna as regras do jogo de Pedra, Papel e Tesoura.
+
+        Este método define e retorna as regras do jogo em um dicionário. Cada chave
+        é uma tupla representando uma combinação de movimentos (jogada do jogador,
+        jogada da máquina). O valor correspondente é uma tupla contendo uma mensagem
+        descrevendo o resultado e um booleano indicando se o jogador venceu ou não.
+
+        Retorno:
+            dict: Um dicionário onde as chaves são tuplas de movimentos e os valores
+            são tuplas com a mensagem do resultado (str) e o status de vitória do jogador (bool).
+        """
+
+        return {
+            (GameMove.PEDRA.value, GameMove.TESOURA.value): ("Você Ganhou! Pedra quebra Tesoura", True),
+            (GameMove.PAPEL.value, GameMove.PEDRA.value): ("Você Ganhou! Papel embrulha Pedra", True),
+            (GameMove.TESOURA.value, GameMove.PAPEL.value): ("Você Ganhou! Tesoura corta Papel", True),
+            (GameMove.TESOURA.value, GameMove.PEDRA.value): ("Você perdeu! Pedra quebra Tesoura", False),
+            (GameMove.PEDRA.value, GameMove.PAPEL.value): ("Você perdeu! Papel embrulha Pedra", False),
+            (GameMove.PAPEL.value, GameMove.TESOURA.value): ("Você perdeu! Tesoura corta Papel", False),
+        }
+
+    @staticmethod
     def check_move(player_option, player_score, machine_score):
         """
         Verifica o resultado de uma jogada no jogo Pedra, Papel e Tesoura.
@@ -104,20 +128,10 @@ class Game():
         machine_move = Game.machine_move()
         player_move = Game.get_move(player_option)
 
-        rules = {
-            (GameMove.PEDRA.value, GameMove.TESOURA.value): ("Você Ganhou! Pedra quebra Tesoura", True),
-            (GameMove.PAPEL.value, GameMove.PEDRA.value): ("Você Ganhou! Papel embrulha Pedra", True),
-            (GameMove.TESOURA.value, GameMove.PAPEL.value): ("Você Ganhou! Tesoura corta Papel", True),
-            (GameMove.TESOURA.value, GameMove.PEDRA.value): ("Você perdeu! Pedra quebra Tesoura", False),
-            (GameMove.PEDRA.value, GameMove.PAPEL.value): ("Você perdeu! Papel embrulha Pedra", False),
-            (GameMove.PAPEL.value, GameMove.TESOURA.value): ("Você perdeu! Tesoura corta Papel", False),
-        }
-
         if player_move == machine_move:
             result = f"Empate! {player_move} empata com {machine_move}"
         else:
-            result, player_won = rules.get((player_move, machine_move),  (None, None))
-
+            result, player_won = Game.rules().get((player_move, machine_move),  (None, None))
             if player_won is True:
                 player_score = Game.update_score(player_score)
             elif player_won is False:
@@ -168,7 +182,7 @@ class Game():
 
     def play_round():
         """
-        Executa uma rodada do jogo de Pedra, Papel e Tesoura.
+        Executa uma rodada do jogo.
 
         Este método inicia uma rodada onde o jogador pode escolher entre Pedra (1),
         Papel (2) e Tesoura (3), ou encerrar a rodada (0). Para cada jogada, o placar
