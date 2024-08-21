@@ -34,7 +34,7 @@ Para executar este projeto, certifique-se de ter o Python instalado. Não são n
     
     ``` python game.py
 
-# Uso
+## Uso
 
     Após iniciar o jogo, siga o menu exibido para escolher sua jogada. A máquina fará uma jogada automaticamente, e o resultado será exibido junto com a pontuação atualizada.
 
