@@ -1,6 +1,6 @@
 # Jogo de Pedra, Papel e Tesoura
 
-Este projeto é uma implementação simples do jogo Pedra, Papel e Tesoura em Python. O jogo permite que um jogador competia contra um oponente de computador e mantém o controle das pontuações.
+Este projeto é uma implementação simples do jogo Pedra, Papel e Tesoura em Python. O jogo permite que um jogador dispute contra um oponente de computador e mantém o controle das pontuações.
 
 ## Estrutura do Projeto
 
