@@ -33,16 +33,16 @@ def initialize():
     atualizado e exibido a cada jogada.
     """
 
-    pontos_jogador = 0
-    pontos_maquina = 0
+    player_score = 0
+    machine_score = 0
 
     while True:
-        opcao = get_user_input(menu())
+        option = get_user_input(menu())
 
-        if opcao in [1, 2, 3]:
-            pontos_jogador, pontos_maquina = Game.verifica_jogada(opcao, pontos_jogador, pontos_maquina)
-            Game.mostra_placar(pontos_jogador=pontos_jogador, pontos_maquina=pontos_maquina)
-        elif opcao == 0:
+        if option in [1, 2, 3]:
+            player_score, machine_score = Game.check_move(option, player_score, machine_score)
+            Game.display_score(player_score=player_score, machine_score=machine_score)
+        elif option == 0:
             print("@@@ Encerrando jogo!!! @@@")
             break
         else:
@@ -50,7 +50,7 @@ def initialize():
 
     clear_terminal()
     print("RESULTADO")
-    Game.mostra_placar(pontos_jogador=pontos_jogador, pontos_maquina=pontos_maquina)
+    Game.display_score(player_score=player_score, machine_score=machine_score)
 
 
 if __name__ == "__main__":

@@ -1,11 +1,47 @@
+"""
+Módulo para o jogo de Pedra, Papel e Tesoura.
+
+Este módulo contém a classe `Game` que implementa a lógica principal do jogo de Pedra, Papel e Tesoura.
+A classe oferece métodos para determinar a jogada do jogador e da máquina, verificar o resultado
+da jogada, atualizar e exibir o placar.
+
+Importações:
+- `random`: Para gerar números aleatórios.
+- `GameMove` de `enums.game_move`: Enum que define os movimentos possíveis (Pedra, Papel, Tesoura).
+
+Classes:
+- `Game`: Contém métodos estáticos para manipulação do jogo, incluindo obtenção de jogadas,
+  verificação de resultados, atualização de pontuação e exibição do placar.
+"""
+
+
 from enums.game_move import GameMove
 import random
 
 
 class Game():
 
+    """
+    Classe que gerencia a lógica do jogo de Pedra, Papel e Tesoura.
+
+    Esta classe fornece métodos para:
+    - Obter a jogada correspondente a uma opção escolhida.
+    - Gerar uma jogada aleatória para a máquina.
+    - Verificar o resultado de uma jogada e atualizar o placar.
+    - Atualizar a pontuação do jogador e da máquina.
+    - Exibir o placar atual do jogo.
+
+    Métodos Estáticos:
+    - `get_move(opcao)`: Retorna a jogada correspondente à opção escolhida pelo jogador.
+    - `jogada_maquina()`: Gera a jogada da máquina aleatoriamente.
+    - `verifica_jogada(opcao_jogador, pontos_jogador, pontos_maquina)`: Verifica o resultado da jogada
+      e atualiza a pontuação com base nas regras do jogo.
+    - `atualiza_pontuacao(pontos)`: Atualiza a pontuação adicionando um ponto.
+    - `mostra_placar(pontos_jogador, pontos_maquina)`: Exibe o placar atual do jogo.
+    """
+
     @staticmethod
-    def get_jogada(opcao):
+    def get_move(option):
         """
         Retorna a jogada correspondente à opção escolhida pelo jogador.
 
@@ -13,25 +49,25 @@ class Game():
         correspondente no jogo de Pedra, Papel e Tesoura.
 
         Parâmetros:
-        - opcao (int): A opção escolhida pelo jogador (1 para Papel, 2 para Pedra, 3 para Tesoura).
+        - option (int): A opção escolhida pelo jogador (1 para Papel, 2 para Pedra, 3 para Tesoura).
 
         Retorno:
         - str: A jogada correspondente (Papel, Pedra ou Tesoura).
 
         Exemplo:
-            get_jogada(1) retorna "Papel".
+            get_move(1) retorna "Papel".
         """
 
-        jogadas = {
+        moves = {
             1: GameMove.PAPEL.value,
             2: GameMove.PEDRA.value,
             3: GameMove.TESOURA.value
         }
 
-        return jogadas[opcao]
+        return moves[option]
 
     @staticmethod
-    def jogada_maquina():
+    def machine_move():
         """
         Gera a jogada da máquina aleatoriamente.
 
@@ -42,30 +78,30 @@ class Game():
         - str: A jogada escolhida pela máquina (Papel, Pedra ou Tesoura).
 
         Exemplo:
-            jogada_maquina() pode retornar "Pedra", "Papel" ou "Tesoura".
+            machine_move() pode retornar "Pedra", "Papel" ou "Tesoura".
         """
 
         numero = random.randint(1, 3)
-        return Game.get_jogada(numero)
+        return Game.get_move(numero)
 
     @staticmethod
-    def verifica_jogada(opcao_jogador, pontos_jogador, pontos_maquina):
+    def check_move(player_option, player_score, machine_score):
         """
         Verifica o resultado de uma jogada no jogo Pedra, Papel e Tesoura.
 
         Args:
-            opcao_jogador (str): A jogada do jogador ("Pedra", "Papel" ou "Tesoura").
-            pontos_jogador (int): Pontuação atual do jogador.
-            pontos_maquina (int): Pontuação atual da máquina.
+            player_option(str): A jogada do jogador ("Pedra", "Papel" ou "Tesoura").
+            player_score(int): Pontuação atual do jogador.
+            machine_score(int): Pontuação atual da máquina.
 
         Returns:
             tuple: Uma tupla contendo a nova pontuação do jogador e da máquina.
         """
 
-        jogada_maquina = Game.jogada_maquina()
-        jogada_usuario = Game.get_jogada(opcao_jogador)
+        machine_move = Game.machine_move()
+        player_move = Game.get_move(player_option)
 
-        regras = {
+        rules = {
             (GameMove.PEDRA.value, GameMove.TESOURA.value): ("Você Ganhou! Pedra quebra Tesoura", True),
             (GameMove.PAPEL.value, GameMove.PEDRA.value): ("Você Ganhou! Papel embrulha Pedra", True),
             (GameMove.TESOURA.value, GameMove.PAPEL.value): ("Você Ganhou! Tesoura corta Papel", True),
@@ -74,28 +110,28 @@ class Game():
             (GameMove.PAPEL.value, GameMove.TESOURA.value): ("Você perdeu! Tesoura corta Papel", False),
         }
 
-        if jogada_usuario == jogada_maquina:
-            resultado = f"Empate! {jogada_usuario} empata com {jogada_maquina}"
+        if player_move == machine_move:
+            result = f"Empate! {player_move} empata com {machine_move}"
         else:
-            resultado, jogador_ganhou = regras.get((jogada_usuario, jogada_maquina),  (None, None))
+            result, player_won = rules.get((player_move, machine_move),  (None, None))
 
-            if jogador_ganhou is True:
-                pontos_jogador = Game.atualiza_pontuacao(pontos_jogador)
-            elif jogador_ganhou is False:
-                pontos_maquina = Game.atualiza_pontuacao(pontos_maquina)
+            if player_won is True:
+                player_score = Game.update_score(player_score)
+            elif player_won is False:
+                machine_score = Game.update_score(machine_score)
 
-        print(resultado)
-        return pontos_jogador, pontos_maquina
+        print(result)
+        return player_score, machine_score
 
     @staticmethod
-    def atualiza_pontuacao(pontos):
+    def update_score(score):
         """
         Atualiza a pontuação adicionando um ponto.
 
         Este método recebe a pontuação atual e retorna a nova pontuação com um ponto a mais.
 
         Parâmetros:
-        - pontos (int): A pontuação atual do jogador.
+        - score (int): A pontuação atual do jogador.
 
         Retorno:
         - int: A nova pontuação após adicionar um ponto.
@@ -103,10 +139,10 @@ class Game():
         Exemplo:
             atualiza_pontuacao(3) retorna 4.
         """
-        return pontos + 1
+        return score + 1
 
     @staticmethod
-    def mostra_placar(pontos_jogador, pontos_maquina):
+    def display_score(player_score, machine_score):
         """
         Exibe o placar atual do jogo.
 
@@ -114,8 +150,8 @@ class Game():
         e a pontuação do jogador de forma clara e formatada.
 
         Parâmetros:
-        - pontos_jogador (int): A pontuação atual do jogador.
-        - pontos_maquina (int): A pontuação atual da máquina.
+        - player_score (int): A pontuação atual do jogador.
+        - machine_score (int): A pontuação atual da máquina.
 
         Exemplo:
             mostra_placar(3, 2) imprime:
@@ -124,5 +160,5 @@ class Game():
         """
 
         print("="*40)
-        print(f"MAQUINA: {pontos_maquina:<10} | VOCÊ: {pontos_jogador:<10}")
+        print(f"MAQUINA: {machine_score:<10} | VOCÊ: {player_score:<10}")
         print("="*40)
